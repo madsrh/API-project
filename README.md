@@ -1,5 +1,5 @@
 # API-Website
-A simple website that pulls data from the SpeedAdmin API.
+Unstyled PHP code to pulls data from the SpeedAdmin API.
 
 Get API info here: https://api.speedadmin.dk/Help
 
