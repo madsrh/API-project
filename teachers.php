@@ -1,6 +1,3 @@
-
-
-
 <table>
 <?php
     function executeRESTCall($method, $url) {
@@ -18,34 +15,35 @@
     }
     $baseUrl = 'https://api.speedadmin.dk/v1/';
 
-    $teachersJSONString = executeRESTCall('GET', $baseUrl . 'teachers');
-    // $getMads = executeRESTCall('GET', 'https://api.speedadmin.dk/v1/teachers/496');
+        $teachersJSONString = executeRESTCall('GET', $baseUrl . 'teachers');
+        // $getMads = executeRESTCall('GET', 'https://api.speedadmin.dk/v1/teachers/496');
 
 
-    // Convert JSON string to Object
-    $teachers = json_decode($teachersJSONString);
-    // Printing all teachers, then you can see what values you have in there
-    // print_r($teachers);
+        // Convert JSON string to Object
+        $teachers = json_decode($teachersJSONString);
+        // Printing all teachers, then you can see what values you have in there
+        // print_r($teachers);
 
-    // Loop through Object
-    foreach($teachers as $key => $value) {
-        if (true) {
-            echo '<tr><td>';
-            echo '<img src="https://www.jammerbugtkulturskole.dk/Files/Cache.net/SpeedAdmin/Teacher_'. strval($value->TeacherId) .'.jpg" width="75px" height="98px"/>
-            </td>';
-            echo '<td><strong>' . ($value->Name . "\n\n") . ($value->Surname) . '</strong>';
+        // Loop through Object
+        foreach($teachers as $key => $value) {
+            if (true) {
+                      echo '<tr><td>';
+                      echo '<img src="https://www.jammerbugtkulturskole.dk/Files/Cache.net/SpeedAdmin/Teacher_'. strval($value->TeacherId) .'.jpg" width="75px" height="98px"/></td>';
+                      echo '<td><strong>' . ($value->Name . "\n\n") . ($value->Surname) . '</strong>';
+                      echo '<ul>';
 
-						echo '<li>[AvailableClasses]</li>
-									<li>Piano</li>
-				  				<li>Guitar</li></td>';
+                      // There might be a better way to do this, but it works :)
+                $listemedfag = $value->AvailableClasses;
+                      for ($i = 0; $i < count($listemedfag); $i++)
+                        echo '<li>' . $listemedfag[$i] . '</li> ' . "\n";
+                        echo '</ul>';
 
-						echo '<td> Email:' . ($value->Email . "\n\n");
+    						echo '<td>Email:' . ' ' . ($value->Email . "\n\n");
+                echo '<br>Tlf. ' . ' ' .($value->Mobile . "\n\n");
+                echo '</td></tr>';
 
-            echo '<br> Tlf. ' . ($value->Mobile . "\n\n");
-            echo '</td></tr>';
-
+            }
         }
-    }
 
-?>
+    ?>
 </table>

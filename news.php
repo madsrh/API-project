@@ -17,12 +17,10 @@
     }
     $baseUrl = 'https://api.speedadmin.dk/v1/';
 
-    $teachersJSONString = executeRESTCall('GET', $baseUrl . 'news');
-    // $getMads = executeRESTCall('GET', 'https://api.speedadmin.dk/v1/teachers/496');
-
+    $newsJSONString = executeRESTCall('GET', $baseUrl . 'news');
 
     // Convert JSON string to Object
-    $news = json_decode($teachersJSONString);
+    $news = json_decode($newsJSONString);
     // Printing all teachers, then you can see what values you have in there
     // print_r($teachers);
 
@@ -33,9 +31,9 @@
           echo '<hr>';
           echo $value->CreatedDate;
           echo '<br><strong>' . $value->Title . "\n\n" . '</strong>';
-          echo'<br>';
+          echo'<br><p>';
           echo($value->Text . "\n\n");
-          echo'<br>';
+          echo'</p><br>';
 
         }
     }
