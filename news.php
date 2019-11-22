@@ -21,8 +21,8 @@
 
     // Convert JSON string to Object
     $news = json_decode($newsJSONString);
-    // Printing all teachers, then you can see what values you have in there
-    // print_r($teachers);
+    // Printing all news, then you can see what values you have in there
+    // print_r($news);
 
     // Loop through Object
     foreach(array_reverse($news) as $key => $value) {
