@@ -34,10 +34,16 @@
           echo'<br><p>';
           echo($value->Text . "\n\n");
           echo'</p><br>';
+            
+                  // checks if HasPicture is == TRUE
+              if ($value->HasPicture) 
+              {
+                $blobimageId = executeRESTCall('GET', $baseUrl . 'blobs/' . $value->Blob->BlobId);
+                echo "<img src='data:image/jpeg;base64," . base64_encode( $blobimageId )."'  width='100%'><br>";
 
-        }
-    }
-
+              } // end of HasPicture if
+        } // end of < 5
+    } // end of foreach        
+              
 ?>
-
 </html>
