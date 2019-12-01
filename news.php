@@ -27,7 +27,7 @@
     // Loop through Object
     foreach(array_reverse($news) as $key => $value) {
 
-        if  ($key < "5") { // View only 5 latest news
+        if  ($key < "15") { // View only 15 latest news
           echo '<hr>';
           echo $value->CreatedDate;
           echo '<br><strong>' . $value->Title . "\n\n" . '</strong>';
@@ -42,7 +42,7 @@
                 echo "<img src='data:image/jpeg;base64," . base64_encode( $blobimageId )."'  width='100%'><br>";
 
               } // end of HasPicture if
-        } // end of < 5
+        } // end of < 15
     } // end of foreach        
               
 ?>
