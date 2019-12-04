@@ -2,12 +2,6 @@
 <html>
 
 
-// This page should have a dropdown combo similar to https://www.jammerbugtkulturskole.dk/undervisningstilbud/musik/musik-tilbud/musik-tilbud?ItemID=368&TreeID=41&UndervisningstilbudID=368
-//
-// Let's say you submit "Kun Orkester" which is SubCategoryID => int(127) then that should link to
-// https://jammerbugt.speedadmin.dk/tilmelding#/Course/368/127
-//
-
 <?php
     function executeRESTCall($method, $url) {
         $curl = curl_init();
@@ -16,7 +10,7 @@
 
         $header = array();
         $header[] = 'Content-type: application/json';
-        $header[] = 'Authorization: xf33dgd5Y1kZbpHfRxZUxqlqwJaZJWCkQKkjiOi2pZwA1shPkIBgjkodqBngeQu8';
+        $header[] = 'Authorization: xUxzYpVhcB4u5YmY60B43HwOHVkKF3Q2GYnyWk4gV8';
 
         curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -29,46 +23,33 @@
     // Convert JSON string to Object
     $courses = json_decode($coursesJSONString);
 
-    // Loop through Object
+
+
     foreach($courses as $key => $value) {
-         // Finds courseid 195
-        if  ($value->CouseId == "368") {
 
-       echo '<h1>' . $value->Text . '</h1>';
-       echo $value->Description;
-       echo '<hr><br>';
+  if  ($value->CouseId == "368") {
 
+     echo '<p>' . strval($key) . ' = CouseId ' . strval($value->CouseId) . ' | Name = ' . strval($value->Course) . '</p>';
 
-       // print_r($value->SubCategories);
-       var_dump($value->SubCategories);
+                                 // jammerbugt.speedadmin.dk/tilmelding%3F%23/Course/368/
+           // What we want: https://jammerbugt.speedadmin.dk/tilmelding#/Course/368/127
+        echo '<form method = "get" action="http://jammerbugt.speedadmin.dk/tilmelding%23/Course/368/' . $value->SubCategories[$i]->SubCategoryID . '">';
+        echo '<select>';
+        echo '<option selected="selected">Choose one</option>';
 
+        for ($i=0; $i < sizeof($value->SubCategories); $i++) {
 
-
-
-?>
-<form>
-    <select>
-        <option selected="selected">Choose one</option>
-        <?php
-
-
-        // Iterating through the array
-        foreach($value->SubCategories as $item){
-        ?>
-        <option value="<?php echo strtolower($item); ?>"><?php echo $item; ?></option>
-        <?php
-        }
-        ?>
-    </select>
-    <input type="submit" value="Submit">
-</form>
-<?php
-
-
+            echo '<option value="' . $value->SubCategories[$i]->SubCategoryID .'">' . $value->SubCategories[$i]->Name. '</option>';
 
         }
+        echo '<input type="submit" value="Submit">';
+        echo '</select>';
+        echo '</form>';
+
+      }
+
     }
 
-?>
 
+?>
 </html>
