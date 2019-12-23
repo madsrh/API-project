@@ -28,7 +28,7 @@
              $blobJSONString = executeRESTCall('GET', $baseUrl . 'blobs/' . $value->Blob->BlobId);
 
              // creates a filename with the teacher ID
-             $unikfilename = "/images/Teacher_". strval($value->TeacherId) . ".jpg";
+             $unikfilename = "images/Teacher_". strval($value->TeacherId) . ".jpg";
 
              // saves the get_included_files
              file_put_contents( $unikfilename, $blobJSONString);
