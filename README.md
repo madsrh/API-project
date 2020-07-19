@@ -1,6 +1,8 @@
 # API-Website
 Unstyled PHP code to pulls data from the SpeedAdmin API.
 
+Remember to change the authorization code in the header of the files!
+
 Get API info here: https://api.speedadmin.dk/Help
 
 ## Todo
