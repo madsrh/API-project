@@ -13,3 +13,7 @@ Get API info here: https://api.speedadmin.dk/Help
 - [x] Grab, display and store images from database
 - [ ] Concert list - lists the upcoming concerts (Booking API)
 
+
+## Contributors
+- Mads Rosendahl
+- Frederik Feichtmeier
