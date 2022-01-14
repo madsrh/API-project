@@ -59,7 +59,7 @@
                 <th>Date</th>
             </tr>
         </thead>
-        <?php foreach (array_reverse($concerts->Results) as $concert) { ?>
+        <?php foreach ($concerts->Results as $concert) { ?>
             <tr>
                 <td><?php echo $concert->Title; ?></td>
                 <td><?php echo $concert->TeacherName; ?></td>
