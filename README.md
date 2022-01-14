@@ -11,9 +11,11 @@ Get API info here: https://api.speedadmin.dk/Help
 - [x] Teacher list page
 - [x] Courses pages - displays a page about eg. guitar lessons (Courses API)
 - [x] Grab, display and store images from database
-- [ ] Concert list - lists the upcoming concerts (Booking API)
+- [x] Concert list - lists the upcoming concerts (Booking API)
+- [ ] List content of each concert (who is playing and what song are they playing)
 
 
 ## Contributors
 - Mads Rosendahl
 - Frederik Feichtmeier
+- Paul Kepinski
