@@ -18,8 +18,13 @@
 
     $baseUrl = 'https://api.speedadmin.dk/v1/%s';
 
-    // Fetch concert using the API, BookingTypeId 9 link to concerts
-    $concertsJSONString = executeRESTCall('POST', sprintf($baseUrl, 'bookings'), '{ "BookingTypeIds": [9] }');
+    // Fetch concerts using the API
+    // BookingTypeId 9 link to concerts
+    // DateFrom exclude all concerts before today
+    $concertsJSONString = executeRESTCall('POST', sprintf($baseUrl, 'bookings'), '{
+        "BookingTypeIds": [9],
+        "DateFrom": "'.date('Y-m-d').'"
+    }');
 
     // Convert JSON string to Object
     $concerts = json_decode($concertsJSONString);
@@ -59,15 +64,16 @@
                 <th>Date</th>
             </tr>
         </thead>
-        <?php foreach ($concerts->Results as $concert) { ?>
-            <tr>
-                <td><?php echo $concert->Title; ?></td>
-                <td><?php echo $concert->TeacherName; ?></td>
-                <td><?php
-                    $datetime = new DateTime($concert->StartDate);
-                    echo $datetime->format('Y-m-d');
-                ?></td>
-            </tr>
+        <?php if (null !== $concerts) {
+            foreach ($concerts->Results as $concert) { ?>
+                <tr>
+                    <td><?php echo $concert->Title; ?></td>
+                    <td><?php echo $concert->TeacherName; ?></td>
+                    <td><?php echo date('Y-m-d', strtotime($concert->StartDate)); ?></td>
+                </tr>
+            <?php }
+        } else { ?>
+                <tr><td colspan="3">No records found</td></tr>
         <?php } ?>
     </table>
 </body>
