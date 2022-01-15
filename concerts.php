@@ -17,20 +17,29 @@
     }
 
     $baseUrl = 'https://api.speedadmin.dk/v1/%s';
+   
+   										//  PublishTypeIds
+   										// 	1 læreportal
+   										//	2 elevportal
+   										//	3 superbruger
+   										//	4 hjemmeside
+   
+   							      // Fetch concerts using the API
+   							      // BookingTypeId 9 link to concerts
+   							      // DateFrom exclude all concerts before today
+   							      $concertsJSONString = executeRESTCall('POST', sprintf($baseUrl, 'bookings'), '{
+   							          "BookingTypeIds": [9],
+   												"PublishTypeIds": [4],
+   							          "DateFrom": "'.date('Y-m-d').'"
+   							      }');
+   
+   							      // Convert JSON string to Object
+   							      $concerts = json_decode($concertsJSONString);
+   
+   							      // Use var_dump($concerts); to printing all concerts, then you can see what values you have in there
+    							  // echo '<pre>' , var_dump($concerts) , '</pre>';
+   								?>
 
-    // Fetch concerts using the API
-    // BookingTypeId 9 link to concerts
-    // DateFrom exclude all concerts before today
-    $concertsJSONString = executeRESTCall('POST', sprintf($baseUrl, 'bookings'), '{
-        "BookingTypeIds": [9],
-        "DateFrom": "'.date('Y-m-d').'"
-    }');
-
-    // Convert JSON string to Object
-    $concerts = json_decode($concertsJSONString);
-
-    // Use var_dump($concerts); to printing all concerts, then you can see what values you have in there
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -65,11 +74,12 @@
             </tr>
         </thead>
         <?php if (null !== $concerts) {
-            foreach ($concerts->Results as $concert) { ?>
+            foreach ($concerts->Results as $concert) {
+              foreach ($concert->BookingDates as $concertdate) { ?>
                 <tr>
                     <td><?php echo $concert->Title; ?></td>
                     <td><?php echo $concert->TeacherName; ?></td>
-                    <td><?php echo date('Y-m-d', strtotime($concert->StartDate)); ?></td>
+                    <td><?php echo date('d-m-Y', strtotime($concertdate->BookingDate)); ?></td>
                 </tr>
             <?php }
         } else { ?>
