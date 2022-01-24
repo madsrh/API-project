@@ -82,6 +82,7 @@
                     <td><?php echo date('d-m-Y', strtotime($concertdate->BookingDate)); ?></td>
                 </tr>
             <?php }
+           } 
         } else { ?>
                 <tr><td colspan="3">No records found</td></tr>
         <?php } ?>
