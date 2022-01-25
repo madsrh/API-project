@@ -18,26 +18,26 @@
 
     $baseUrl = 'https://api.speedadmin.dk/v1/%s';
    
-   										//  PublishTypeIds
-   										// 	1 læreportal
-   										//	2 elevportal
-   										//	3 superbruger
-   										//	4 hjemmeside
-   
-   							      // Fetch concerts using the API
-   							      // BookingTypeId 9 link to concerts
-   							      // DateFrom exclude all concerts before today
-   							      $concertsJSONString = executeRESTCall('POST', sprintf($baseUrl, 'bookings'), '{
-   							          "BookingTypeIds": [9],
-   												"PublishTypeIds": [1],
-   							          "DateFrom": "'.date('Y-m-d').'"
-   							      }');
-   
-   							      // Convert JSON string to Object
-   							      $concerts = json_decode($concertsJSONString);
-   
-   							      // Use var_dump($concerts); to printing all concerts, then you can see what values you have in there
-                                     ?>
+    //  PublishTypeIds
+    // 	1 læreportal
+    //	2 elevportal
+    //	3 superbruger
+    //	4 hjemmeside
+
+    // Fetch concerts using the API
+    // BookingTypeId 9 link to concerts
+    // DateFrom exclude all concerts before today
+    $concertsJSONString = executeRESTCall('POST', sprintf($baseUrl, 'bookings'), '{
+        "BookingTypeIds": [9],
+        "PublishTypeIds": [1],
+        "DateFrom": "'.date('Y-m-d').'"
+    }');
+
+    // Convert JSON string to Object
+    $concerts = json_decode($concertsJSONString);
+
+    // Use var_dump($concerts); to printing all concerts, then you can see what values you have in there
+?>
 
 <!DOCTYPE html>
 <html lang="en">
