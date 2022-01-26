@@ -1,45 +1,52 @@
 <?php
-    function executeRESTCall(string $method, string $url, string $body)
-    {
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $body);
 
-        $header = [];
-        $header[] = 'Content-type: application/json';
-        $header[] = 'Authorization: averylongauthkey';
+// Enable error display
+// ini_set("display_errors", 1);
+// ini_set("track_errors", 1);
+// ini_set("html_errors", 1);
+// error_reporting(E_ALL);
 
-        curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+function executeRESTCall(string $method, string $url, string $body)
+{
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $body);
 
-        return curl_exec($curl);
-    }
+    $header = [];
+    $header[] = 'Content-type: application/json';
+    $header[] = 'Authorization: averylongauthkey';
 
-    $baseUrl = 'https://api.speedadmin.dk/v1/%s';
-   
-   										//  PublishTypeIds
-   										// 	1 læreportal
-   										//	2 elevportal
-   										//	3 superbruger
-   										//	4 hjemmeside
-   
-   							      // Fetch concerts using the API
-   							      // BookingTypeId 9 link to concerts
-   							      // DateFrom exclude all concerts before today
-   							      $concertsJSONString = executeRESTCall('POST', sprintf($baseUrl, 'bookings'), '{
-   							          "BookingTypeIds": [9],
-   												"PublishTypeIds": [4],
-   							          "DateFrom": "'.date('Y-m-d').'"
-   							      }');
-   
-   							      // Convert JSON string to Object
-   							      $concerts = json_decode($concertsJSONString);
-   
-   							      // Use var_dump($concerts); to printing all concerts, then you can see what values you have in there
-    							  // echo '<pre>' , var_dump($concerts) , '</pre>';
-   								?>
+    curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 
+    return curl_exec($curl);
+}
+
+$baseUrl = 'https://api.speedadmin.dk/v1/%s';
+
+//  PublishTypeIds
+// 	1 læreportal
+//	2 elevportal
+//	3 superbruger
+//	4 hjemmeside
+
+// Fetch concerts using the API
+// BookingTypeId 9 link to concerts
+// DateFrom exclude all concerts before today
+$concertsJSONString = executeRESTCall('POST', sprintf($baseUrl, 'bookings'), '{
+    "BookingTypeIds": [9],
+    "PublishTypeIds": [4],
+    "DateFrom": "'.date('Y-m-d').'"
+}');
+
+// Convert JSON string to Object
+$concerts = json_decode($concertsJSONString);
+
+// Use var_dump($concerts); to printing all concerts, then you can see what values you have in there
+// echo '<pre>' , var_dump($concerts) , '</pre>';
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -58,7 +65,11 @@
         }
         td,
         th {
-            padding: .5rem;
+            padding: .5rem .5rem;
+        }
+        ul {
+            padding-left: 1rem;
+            margin: 0;
         }
     </style>
 
@@ -73,18 +84,24 @@
                 <th>Date</th>
             </tr>
         </thead>
-        <?php if (null !== $concerts) {
-            foreach ($concerts->Results as $concert) {
-              foreach ($concert->BookingDates as $concertdate) { ?>
+        <?php if (null !== $concerts->Results) {
+            foreach ($concerts->Results as $concert) { ?>
                 <tr>
                     <td><?php echo $concert->Title; ?></td>
                     <td><?php echo $concert->TeacherName; ?></td>
-                    <td><?php echo date('d-m-Y', strtotime($concertdate->BookingDate)); ?></td>
+                    <td>
+                        <ul>
+                            <?php foreach ($concert->BookingDates as $concertdate) { 
+                                ?><li>
+                                    <?php echo date('d-m-Y', strtotime($concertdate->BookingDate)); ?>
+                                </li><?php
+                            } ?>
+                        </ul>
+                    </td>
                 </tr>
-            <?php }
-           } 
+            <?php } 
         } else { ?>
-                <tr><td colspan="3">No records found</td></tr>
+            <tr><td colspan="3">No records found</td></tr>
         <?php } ?>
     </table>
 </body>

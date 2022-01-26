@@ -7,7 +7,7 @@
 
         $header = array();
         $header[] = 'Content-type: application/json';
-        $header[] = 'Authorization: 3FscW4zZDJLQ2FCdXR5bjh5OEtwNm9abHVJYVZyZlpoZ25OYldXWWYvNVlV'; // Add you own authorization key
+        $header[] = 'Authorization: averylongauthkey'; // Add you own authorization key
 
         curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
