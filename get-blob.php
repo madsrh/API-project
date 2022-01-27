@@ -8,4 +8,10 @@
 
 require_once('lib/executeRESTCall.php');
 
+// Return 404 error if no ID
+if (null === $_GET['id']) {
+    http_response_code(404);
+    die();
+}
+
 echo executeRESTCall('GET', sprintf('/blobs/%s', $_GET['id']));
