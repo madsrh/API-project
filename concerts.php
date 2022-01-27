@@ -67,7 +67,7 @@ $concerts = json_decode($concertsJSONString);
                 <th>Date</th>
             </tr>
         </thead>
-        <?php if (null !== $concerts->Results) {
+        <?php if (null !== $concerts && null !== $concerts->Results) {
             foreach ($concerts->Results as $concert) { ?>
                 <tr>
                     <td><?php echo $concert->Title; ?></td>
