@@ -3,22 +3,9 @@
 
 
 <?php
-    function executeRESTCall($method, $url) {
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
+    require_once(__DIR__.'/lib/executeRESTCall.php');
 
-        $header = array();
-        $header[] = 'Content-type: application/json';
-        $header[] = 'Authorization: xUxzYpVhcB4u5YmY60B43HwOHVkKF3Q2GYnyWk4gV8';
-
-        curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        return curl_exec($curl);
-    }
-    $baseUrl = 'https://api.speedadmin.dk/v1/';
-
-    $coursesJSONString = executeRESTCall('GET', $baseUrl . 'courses' );
+    $coursesJSONString = executeRESTCall('GET', '/courses' );
 
     // Convert JSON string to Object
     $courses = json_decode($coursesJSONString);

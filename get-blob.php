@@ -6,20 +6,12 @@
 // ini_set("html_errors", 1);
 // error_reporting(E_ALL);
 
-function executeRESTCall($method, $url) {
-    $curl = curl_init();
-    curl_setopt($curl, CURLOPT_URL, $url);
-    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
+require_once('lib/executeRESTCall.php');
 
-    $header = array();
-    $header[] = 'Content-type: application/json';
-    $header[] = 'Authorization: averylongauthkey'; // Add you own authorization key
-
-    curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-    return curl_exec($curl);
+// Return 404 error if no ID
+if (null === $_GET['id']) {
+    http_response_code(404);
+    die();
 }
 
-$baseUrl = 'https://api.speedadmin.dk/v1/%s';
-
-echo executeRESTCall('GET', sprintf($baseUrl, 'blobs/'.$_GET['id']));
+echo executeRESTCall('GET', sprintf('/blobs/%s', $_GET['id']));

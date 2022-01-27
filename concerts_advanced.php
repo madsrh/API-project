@@ -6,24 +6,7 @@
 // ini_set("html_errors", 1);
 // error_reporting(E_ALL);
 
-function executeRESTCall(string $method, string $url, ?string $body = null)
-{
-    $curl = curl_init();
-    curl_setopt($curl, CURLOPT_URL, $url);
-    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
-    curl_setopt($curl, CURLOPT_POSTFIELDS, $body);
-
-    $header = [];
-    $header[] = 'Content-type: application/json';
-    $header[] = 'Authorization: averylongauthkey'; // Add you own authorization key
-
-    curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-
-    return curl_exec($curl);
-}
-
-$baseUrl = 'https://api.speedadmin.dk/v1/%s';
+require_once(__DIR__.'/lib/executeRESTCall.php');
 
 //  PublishTypeIds
 // 	1 læreportal
@@ -34,7 +17,7 @@ $baseUrl = 'https://api.speedadmin.dk/v1/%s';
 // Fetch concerts using the API
 // BookingTypeId 9 link to concerts
 // DateFrom exclude all concerts before today
-$concertsJSONString = executeRESTCall('POST', sprintf($baseUrl, 'bookings'), '{
+$concertsJSONString = executeRESTCall('POST', '/bookings', '{
     "BookingTypeIds": [9],
     "PublishTypeIds": [1],
     "DateFrom": "'.date('Y-m-d').'"
@@ -89,7 +72,7 @@ $formatter = new IntlDateFormatter($locale, IntlDateFormatter::LONG, IntlDateFor
                 <th>Description</td>
             </tr>
         </thead>
-        <?php if (null !== $concerts->Results) {
+        <?php if (null !== $concerts && null !== $concerts->Results) {
             foreach ($concerts->Results as $concert) { ?>
                 <tr>
                     <td><?php 

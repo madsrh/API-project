@@ -2,22 +2,10 @@
 <html>
 <h2>NEWS</h2>
 <?php
-    function executeRESTCall($method, $url) {
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
 
-        $header = array();
-        $header[] = 'Content-type: application/json';
-        $header[] = 'Authorization: xf33dgd5Y1kZbpHfRxZUxqlqwJaZJWCkQKkjiOi2pZwA1shPkIBgjkodqBngeQu2';
+    require_once(__DIR__.'/lib/executeRESTCall.php');
 
-        curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        return curl_exec($curl);
-    }
-    $baseUrl = 'https://api.speedadmin.dk/v1/';
-
-    $newsJSONString = executeRESTCall('GET', $baseUrl . 'news');
+    $newsJSONString = executeRESTCall('GET', '/news');
 
     // Convert JSON string to Object
     $news = json_decode($newsJSONString);
