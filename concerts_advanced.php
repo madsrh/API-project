@@ -19,7 +19,7 @@ require_once(__DIR__.'/lib/executeRESTCall.php');
 // DateFrom exclude all concerts before today
 $concertsJSONString = executeRESTCall('POST', '/bookings', '{
     "BookingTypeIds": [9],
-    "PublishTypeIds": [1],
+    "PublishTypeIds": [4],
     "DateFrom": "'.date('Y-m-d').'"
 }');
 
